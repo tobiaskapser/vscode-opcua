@@ -1,0 +1,117 @@
+{
+  "name": "vscode-opcua",
+  "displayName": "vscode-opcua",
+  "description": "VS Code OPC UA provides a simple interface to connect VS Code to an OPC UA Server.",
+  "license": "MIT",
+  "repository": "https://github.com/tobiaskapser/vscode-opcua",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:vscode-opcua.connect"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-opcua.connect",
+        "title": "Connect to an OPC UA server"
+      },
+      {
+        "command": "vscode-opcua.disconnect",
+        "title": "Disconnect from an OPC UA server"
+      },
+      {
+        "command": "vscode-opcua.addToWatchlist",
+        "title": "Add to watchlist"
+      },
+      {
+        "command": "vscode-opcua.reloadValues",
+        "title": "Reload Values",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "vscode-opcua.removeFromWatchlist",
+        "title": "Remove from watchlist"
+      },
+      {
+        "command": "vscode-opcua.copyValueToClipBoard",
+        "title": "Copy value to clipboard"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "OPC_UA_Explorer",
+          "title": "OPC UA Explorer",
+          "icon": "$(database)"
+        }
+      ]
+    },
+    "views": {
+      "OPC_UA_Explorer": [
+        {
+          "id": "OPC_UA_Explorer",
+          "name": "OPC UA Explorer",
+          "contextualTitle": "OPC UA Explorer"
+        },
+        {
+          "id": "OPC_UA_Values",
+          "name": "OPC UA Values",
+          "contextualTitle": "OPC UA Values"
+        }
+      ]
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "vscode-opcua.addToWatchlist",
+          "when": "view == OPC_UA_Explorer && viewItem == variable"
+        },
+        {
+          "command": "vscode-opcua.removeFromWatchlist",
+          "when": "view == OPC_UA_Values"
+        },
+        {
+          "command": "vscode-opcua.copyValueToClipBoard",
+          "when": "view == OPC_UA_Values"
+        }
+      ],
+      "view/title": [
+          {
+              "command": "vscode-opcua.reloadValues",
+              "when": "view == OPC_UA_Values",
+              "group": "navigation"
+          }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "node-opcua": "^2.88.0"
+  }
+}
